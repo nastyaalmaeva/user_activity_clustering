@@ -1,0 +1,12 @@
+# .gitignore
+venv/
+__pycache__/
+*.pyc
+.DS_Store
+models/
+plots/
+data/
+*.pkl
+*.html
+*.png
+*.csv
