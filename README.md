@@ -44,26 +44,6 @@
 | GMM | 4 | 0% | 0.664 |
 | Спектральная | 4 | 0% | 0.660 |
 
-### Структура проекта
-.
-├── src/
-│ ├── generate_data.py # генерация синтетических данных
-│ ├── eda.py # разведочный анализ
-│ ├── preprocess.py # масштабирование, PCA, t-SNE
-│ ├── optimal_k.py # выбор оптимального числа кластеров
-│ ├── cluster_kmeans.py # KMeans
-│ ├── cluster_dbscan.py # DBSCAN
-│ ├── cluster_hierarchical.py # иерархическая кластеризация
-│ ├── cluster_gmm.py # Gaussian Mixture Models
-│ ├── cluster_spectral.py # спектральная кластеризация
-│ └── visualize.py # визуализация результатов
-├── data/ # csv файлы с данными
-├── plots/ # графики (png, html)
-├── models/ # сохранённые модели (pkl)
-├── requirements.txt # зависимости
-└── README.md
-
-
 ### Запуск
 
 ```bash
