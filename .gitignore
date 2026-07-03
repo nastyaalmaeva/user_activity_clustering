@@ -5,8 +5,6 @@ __pycache__/
 .DS_Store
 models/
 plots/
-data/
 *.pkl
 *.html
 *.png
-*.csv
