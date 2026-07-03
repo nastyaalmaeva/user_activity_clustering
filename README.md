@@ -1,42 +1,93 @@
 ## Кластеризация пользователей
 
-Анализ и кластеризация синтетических данных о поведении пользователей.
+Сравнительный анализ методов кластеризации на синтетических данных о поведении пользователей.
 
 ### Данные
 
-10000 пользователей с 5 поведенческими признаками:
-- daily_usage_min - минуты в день
-- sessions_per_day - сессий за день
-- avg_session_duration - средняя длительность сессии
-- purchase_count - покупок за месяц
-- referral_count - приглашений друзей
+10 000 пользователей с 5 поведенческими признаками:
+- `daily_usage_min` — минуты в день
+- `sessions_per_day` — сессий за день
+- `avg_session_duration` — средняя длительность сессии
+- `purchase_count` — покупок за месяц
+- `referral_count` — приглашений друзей
 
 Истинные кластеры: Sleeping, Active, Whales, Viral
 
-### Этапы
+### Методы кластеризации
 
-1. `generate_data.py` - генерация данных
-2. `eda.py` - разведочный анализ
-3. `preprocess.py` - масштабирование, PCA, t-SNE
-4. `cluster_kmeans.py` - кластеризация KMeans
-5. `cluster_dbscan.py` - кластеризация DBSCAN
-6. `visualize.py` - статические и интерактивные графики
+| Метод | Тип | Особенности |
+|-------|-----|-------------|
+| KMeans | центроидный | быстрый, требует указать k |
+| DBSCAN | плотностной | не требует k, находит шум |
+| Иерархическая | агломеративная | дендрограмма, не требует k |
+| GMM | вероятностный | мягкая кластеризация |
+| Спектральная | графовый | работает со сложными формами |
+
+### Выбор оптимального k
+
+5 методов:
+- Elbow Method (инерция)
+- Silhouette Score
+- Calinski-Harabasz Index
+- Davies-Bouldin Index
+- Gap Statistic
+
+Результат: все методы сошлись на k=4
 
 ### Результаты
 
-| Метрика | KMeans | DBSCAN |
-|---------|--------|--------|
-| Кластеры | 4 | 4 |
-| Silhouette | 0.667 | 0.656 |
-| Calinski-Harabasz | 19661.5 | 11686.3 |
-| Davies-Bouldin | 0.530 | 2.238 |
+| Метод | Кластеры | Шум | Silhouette |
+|-------|----------|-----|------------|
+| KMeans | 4 | 0% | 0.667 |
+| DBSCAN | 4 | 3.8% | 0.656 |
+| Иерархическая | 4 | 0% | 0.665 |
+| GMM | 4 | 0% | 0.664 |
+| Спектральная | 4 | 0% | 0.660 |
+
+### Структура проекта
+.
+├── src/
+│ ├── generate_data.py # генерация синтетических данных
+│ ├── eda.py # разведочный анализ
+│ ├── preprocess.py # масштабирование, PCA, t-SNE
+│ ├── optimal_k.py # выбор оптимального числа кластеров
+│ ├── cluster_kmeans.py # KMeans
+│ ├── cluster_dbscan.py # DBSCAN
+│ ├── cluster_hierarchical.py # иерархическая кластеризация
+│ ├── cluster_gmm.py # Gaussian Mixture Models
+│ ├── cluster_spectral.py # спектральная кластеризация
+│ └── visualize.py # визуализация результатов
+├── data/ # csv файлы с данными
+├── plots/ # графики (png, html)
+├── models/ # сохранённые модели (pkl)
+├── requirements.txt # зависимости
+└── README.md
+
 
 ### Запуск
 
 ```bash
-python generate_data.py
-python eda.py
-python preprocess.py
-python cluster_kmeans.py
-python cluster_dbscan.py
-python visualize.py
+# установка зависимостей
+pip install -r requirements.txt
+
+# генерация данных
+python src/generate_data.py
+
+# анализ
+python src/eda.py
+
+# предобработка
+python src/preprocess.py
+
+# выбор оптимального k
+python src/optimal_k.py
+
+# кластеризация (по очереди)
+python src/cluster_kmeans.py
+python src/cluster_dbscan.py
+python src/cluster_hierarchical.py
+python src/cluster_gmm.py
+python src/cluster_spectral.py
+
+# визуализация
+python src/visualize.py
